@@ -1,3 +1,4 @@
+import pandas as pd
 import matplotlib.pyplot as plt
 
 def plot_routes(df, title):
@@ -7,7 +8,7 @@ def plot_routes(df, title):
     plt.figure(figsize = (15,10))
     for driver in df.driver.unique():
         driver_df = df[df.driver == driver]
-        driver_df = driver_df.append(driver_df.iloc[0,:])   
+        driver_df = pd.concat([driver_df, driver_df.iloc[0,:].to_frame().T])   
         plt.plot(driver_df['x_coord'], driver_df['y_coord'], c = 'navy')
         plt.scatter(driver_df['x_coord'], driver_df['y_coord'], s = 50, zorder = 4)
         plt.scatter(driver_df.iloc[0,:]['x_coord'], driver_df.iloc[0,:]['y_coord'], s = 250, c = 'black', marker = 'x', zorder = 5)
